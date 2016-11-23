@@ -11,24 +11,24 @@ const (
 )
 
 type EntryInformation struct {
-	Eid        int        `json:"eid"`
-	Title      string     `json:"title"`
-	Count      int        `json:"count"`
-	Url        string     `json:"url"`
-	Entry_url  string     `json:"entry_url"`
-	Screenshot string     `json:"screenshot"`
-	Bookmarks  []Bookmark `json:"bookmarks"`
-	Related    []Related  `json:"related"`
+	Eid        int            `json:"eid"`
+	Title      string         `json:"title"`
+	Count      int            `json:"count"`
+	Url        string         `json:"url"`
+	Entry_url  string         `json:"entry_url"`
+	Screenshot string         `json:"screenshot"`
+	Bookmarks  []BookmarkUser `json:"bookmarks"`
+	Related    []RelatedEntry `json:"related"`
 }
 
-type Bookmark struct {
+type BookmarkUser struct {
 	User      string   `json:"user"`
 	Comment   string   `json:"comment"`
 	Timestamp string   `json:"timestamp"`
 	Tags      []string `json:"tags"`
 }
 
-type Related struct {
+type RelatedEntry struct {
 	Eid       int    `json:"eid"`
 	Title     string `json:"title"`
 	Count     int    `json:"count"`

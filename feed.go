@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	feedURL = "http://b.hatena.ne.jp"
+	feedURL = "http://b.hatena.ne.jp/"
 )
 
 type Entry struct {
@@ -33,7 +33,7 @@ func HotEntryAll() (*Entries, error) {
 
 func (c *Client) HotEntryAll() (*Entries, error) {
 
-	req := feedURL + "/hotentry?mode=rss"
+	req := feedURL + "hotentry?mode=rss"
 	request := gorequest.New()
 	resp, body, errs := request.Get(req).End()
 
@@ -54,7 +54,7 @@ func HotEntry(category string) (*Entries, error) {
 
 func (c *Client) HotEntry(category string) (*Entries, error) {
 
-	req := feedURL + "/hotentry/" + category + ".rss"
+	req := feedURL + "hotentry/" + category + ".rss"
 
 	request := gorequest.New()
 	resp, body, errs := request.Get(req).End()
@@ -81,7 +81,7 @@ func (c *Client) NewEntryAll(options map[string]string) (*Entries, error) {
 		val.Add(k, v)
 	}
 
-	req := feedURL + "/entrylist?" + val.Encode()
+	req := feedURL + "entrylist?" + val.Encode()
 	request := gorequest.New()
 	resp, body, errs := request.Get(req).End()
 
@@ -107,7 +107,7 @@ func (c *Client) NewEntry(category string, options map[string]string) (*Entries,
 	for k, v := range options {
 		val.Add(k, v)
 	}
-	req := feedURL + "/entrylist/" + category + ".rss?" + val.Encode()
+	req := feedURL + "entrylist/" + category + ".rss?" + val.Encode()
 
 	request := gorequest.New()
 	resp, body, errs := request.Get(req).End()
@@ -138,7 +138,7 @@ func (c *Client) SearchEntry(searchWord string, searchType string, options map[s
 		val.Add(k, v)
 	}
 
-	req := feedURL + "/search/" + searchType + "?" + val.Encode()
+	req := feedURL + "search/" + searchType + "?" + val.Encode()
 
 	request := gorequest.New()
 	resp, body, errs := request.Get(req).End()
@@ -168,7 +168,7 @@ func (c *Client) SearchUrlEntry(searchUrl string, options map[string]string) (*E
 		val.Add(k, v)
 	}
 
-	req := feedURL + "/entrylist?" + val.Encode()
+	req := feedURL + "entrylist?" + val.Encode()
 
 	request := gorequest.New()
 	resp, body, errs := request.Get(req).End()

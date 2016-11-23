@@ -10,7 +10,7 @@ import (
 func main() {
 
 	//
-	// Get "it" category feed, "10" over bookmarks and sort by "popular"
+	// Get IT category feed
 	//
 	options := map[string]string{
 		"sort":      "popular",
@@ -21,6 +21,7 @@ func main() {
 	//
 	// Search entry from matching url
 	//
+
 	//options := map[string]string{
 	//	"sort": "count",
 	//}
