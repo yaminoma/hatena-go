@@ -11,14 +11,14 @@ const (
 )
 
 type EntryInformation struct {
-	Eid        int            `json:"eid"`
-	Title      string         `json:"title"`
-	Count      int            `json:"count"`
-	Url        string         `json:"url"`
-	Entry_url  string         `json:"entry_url"`
-	Screenshot string         `json:"screenshot"`
-	Bookmarks  []BookmarkUser `json:"bookmarks"`
-	Related    []RelatedEntry `json:"related"`
+	Eid            int            `json:"eid"`
+	Title          string         `json:"title"`
+	Count          int            `json:"count"`
+	Url            string         `json:"url"`
+	EntryUrl       string         `json:"entry_url"`
+	Screenshot     string         `json:"screenshot"`
+	Bookmarks      []BookmarkUser `json:"bookmarks"`
+	RelatedEntries []RelatedEntry `json:"related"`
 }
 
 type BookmarkUser struct {
@@ -29,13 +29,14 @@ type BookmarkUser struct {
 }
 
 type RelatedEntry struct {
-	Eid       int    `json:"eid"`
-	Title     string `json:"title"`
-	Count     int    `json:"count"`
-	Url       string `json:"url"`
-	Entry_url string `json:"entry_url"`
+	Eid      int    `json:"eid"`
+	Title    string `json:"title"`
+	Count    int    `json:"count"`
+	Url      string `json:"url"`
+	EntryUrl string `json:"entry_url"`
 }
 
+// EntryInfo is a wrapper around DefaultClient.EntryInfo.
 func EntryInfo(url string) (*EntryInformation, error) {
 	return DefaultClient.EntryInfo(url)
 }

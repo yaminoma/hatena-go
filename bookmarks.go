@@ -1,16 +1,15 @@
 package hatena_go
 
 import (
-	"fmt"
-	_ "log"
-	"net/url"
-	_ "strings"
+	_ "fmt"
+	_ "net/url"
 
-	"github.com/parnurzeal/gorequest"
+	_ "github.com/mrjones/oauth"
+	_ "github.com/parnurzeal/gorequest"
 )
 
 const (
-	bookmarkURL = "http://api.b.st-hatena.com/entry.count?url=%s"
+	bookmarkURL = "http://api.b.st-hatena.com/entry.count"
 )
 
 type Bookmark struct {
@@ -25,23 +24,6 @@ type BookmarkResponse struct {
 	permalink        string
 	private          bool
 	tags             string
-}
-
-func (s *Bookmark) Count(urlStr string) (count int, errs []error) {
-	u, err := url.Parse(urlStr)
-	if err != nil {
-		return
-	}
-
-	request := gorequest.New()
-	req := fmt.Sprintf(bookmarkURL, u)
-	resp, _, errs := request.Get(req).End()
-
-	if resp.StatusCode != 200 {
-		return count, errs
-	}
-
-	return count, errs
 }
 
 func (s *Bookmark) Add(urlStr string, comment string, tags []string) (response string, err error) {
