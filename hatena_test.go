@@ -1,4 +1,4 @@
-package hatena_go
+package hatena
 
 import (
 	"net/http"

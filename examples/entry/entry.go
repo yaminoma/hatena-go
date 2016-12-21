@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	res, err := hatena_go.EntryInfo("https://github.com/")
+	res, err := hatena.EntryInfo("https://github.com/")
 
 	if err != nil {
 		log.Fatal(err)

@@ -16,7 +16,7 @@ func main() {
 		"sort":      "popular",
 		"threshold": "10",
 	}
-	res, err := hatena_go.NewEntry("it", options)
+	res, err := hatena.NewEntry("it", options)
 
 	//
 	// Search entry from matching url
@@ -25,7 +25,7 @@ func main() {
 	//options := map[string]string{
 	//	"sort": "count",
 	//}
-	//res, err := hatena_go.SearchUrlEntry("hatena.ne.jp", options)
+	//res, err := hatena.SearchUrlEntry("hatena.ne.jp", options)
 
 	if err != nil {
 		log.Fatal(err)

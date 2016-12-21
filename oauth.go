@@ -1,4 +1,4 @@
-package hatena_go
+package hatena
 
 // OAuth 1.0 consumer implementation.
 // See http://www.oauth.net and RFC 5849
