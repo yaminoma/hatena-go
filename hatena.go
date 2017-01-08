@@ -5,8 +5,6 @@ import (
 	_ "log"
 	"net/http"
 	_ "net/url"
-
-	_ "github.com/markbates/goth"
 )
 
 const (
@@ -24,15 +22,6 @@ var (
 		http: new(http.Client),
 	}
 )
-
-//type Client struct {
-//	Provider          goth.Provider
-//	AccessToken       string
-//	AccessTokenSecret string
-//	BaseURL           *url.URL
-//	UserAgent         string
-//	BookMark          *Bookmark
-//}
 
 // Client is a client for working with the Hatena Web API.
 // To create an authenticated client, use the
