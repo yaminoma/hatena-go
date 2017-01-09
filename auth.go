@@ -25,11 +25,11 @@ const (
 type Authenticator struct {
 	config      oauth.Client
 	redirectUri string
-	scopes      []string
+	scopes      url.Values
 	cred        *oauth.Credentials
 }
 
-func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri string, scopes ...string) Authenticator {
+func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri string, scopes []string) Authenticator {
 	oauthClient := oauth.Client{
 		Credentials: oauth.Credentials{
 			Token:  consumerKey,
@@ -40,10 +40,15 @@ func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri str
 		TokenRequestURI:               "https://www.hatena.com/oauth/token",
 	}
 
+	scopeParam := url.Values{}
+	for _, v := range scopes {
+		scopeParam.Add("scope", v)
+	}
+
 	return Authenticator{
 		config:      oauthClient,
 		redirectUri: redirectUri,
-		scopes:      scopes,
+		scopes:      scopeParam,
 	}
 }
 
@@ -57,8 +62,7 @@ func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri str
 //}
 
 func (auth *Authenticator) AuthURL(w http.ResponseWriter, r *http.Request) string {
-	scope := url.Values{"scope": auth.scopes}
-	tempCred, err := auth.config.RequestTemporaryCredentials(nil, auth.redirectUri, scope)
+	tempCred, err := auth.config.RequestTemporaryCredentials(nil, auth.redirectUri, auth.scopes)
 	if err != nil {
 		log.Fatal("RequestTemporaryCredentials:", err)
 	}
@@ -85,8 +89,7 @@ func (auth *Authenticator) Token(w http.ResponseWriter, r *http.Request) *oauth.
 	if err != nil {
 		log.Fatal(w, "Error getting request token, "+err.Error(), 500)
 	}
-	auth.cred.Token = tokenCred.Token
-	auth.cred.Secret = tokenCred.Secret
+	auth.cred = tokenCred
 
 	delete(s, tempCredKey)
 	s[tokenCredKey] = tokenCred
@@ -99,8 +102,12 @@ func (auth *Authenticator) Token(w http.ResponseWriter, r *http.Request) *oauth.
 
 // authHandler reads the auth cookie and invokes a handler with the result.
 type AuthHandler struct {
-	handler  func(w http.ResponseWriter, r *http.Request)
-	optional bool
+	Handler  func(w http.ResponseWriter, r *http.Request)
+	Optional bool
+}
+
+func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	h.Handler(w, r)
 }
 
 // apiGet issues a GET request to the Hatena API and decodes the response JSON to data.
@@ -110,6 +117,7 @@ func (auth *Authenticator) ApiGet(urlStr string, form url.Values, data interface
 		return err
 	}
 	defer resp.Body.Close()
+	fmt.Println(resp)
 	return decodeResponse(resp, data)
 }
 

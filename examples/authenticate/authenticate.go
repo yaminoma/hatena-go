@@ -4,6 +4,7 @@ import (
 	"fmt"
 	_ "log"
 	"net/http"
+	"net/url"
 
 	"github.com/8pockets/hatena-go"
 )
@@ -16,7 +17,9 @@ const ConsumerKey = "2wDjTLiLsfRplA=="
 const ConsumerSecret = "ts+bQgDIp/GI1I5q+v8Ca+12pA0="
 
 var (
-	auth = hatena.NewAuthenticator(ConsumerKey, ConsumerSecret, redirectURI, hatena.HatenaReadPrivate)
+	scopes = []string{hatena.HatenaReadPrivate}
+	//scopes = []string{hatena.HatenaReadPublic, hatena.HatenaReadPrivate}
+	auth = hatena.NewAuthenticator(ConsumerKey, ConsumerSecret, redirectURI, scopes)
 )
 
 func main() {
@@ -24,7 +27,7 @@ func main() {
 	http.HandleFunc("/auth", authUrl)
 
 	http.HandleFunc("/callback", token)
-	http.Handle("/profile", hatena.AuthHandler{handler: profile})
+	http.Handle("/profile", &hatena.AuthHandler{Handler: profile})
 
 	http.ListenAndServe(":8080", nil)
 
@@ -46,11 +49,15 @@ func token(w http.ResponseWriter, r *http.Request) {
 
 func profile(w http.ResponseWriter, r *http.Request) {
 	var dms []map[string]interface{}
-	if err := auth.ApiGet(
-		"http://n.hatena.com/applications/my.json",
-		nil,
+
+	form := url.Values{}
+	form.Add("url", "http://www.fashionsnap.com/the-posts/2017-01-04/rap-year-book/")
+
+	if err := auth.ApiPost(
+		"http://api.b.hatena.ne.jp/1/my/bookmark",
+		form,
 		&dms); err != nil {
-		http.Error(w, "Error getting timeline, "+err.Error(), 500)
+		http.Error(w, "Error getting api, "+err.Error(), 500)
 		return
 	}
 	fmt.Fprintf(w, "%s", dms)
