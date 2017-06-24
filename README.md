@@ -7,9 +7,6 @@ Overview
 ------------------
 [Hatena](http://developer.hatena.ne.jp/ja/documents/bookmark/apis/rest) API client by golang.
 
-Quick Start
-------------------
-
 License
 ------------------
 MIT
