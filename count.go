@@ -2,29 +2,25 @@ package hatena
 
 import (
 	"net/url"
-
-	"github.com/parnurzeal/gorequest"
 )
 
 const (
 	countURL = "http://api.b.st-hatena.com/entry.count"
 )
 
-func Count(query string) (body string, errs []error) {
+func Count(query string) (int, error) {
 	return DefaultClient.Count(query)
 }
 
-func (c *Client) Count(urlStr string) (body string, errs []error) {
+func (c *Client) Count(urlStr string) (int, error) {
 
 	v := url.Values{}
 	v.Set("url", urlStr)
 	req := countURL + "?" + v.Encode()
 
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	co := new(int)
+	err := c.get(req, co, "json")
 
-	if resp.StatusCode != 200 {
-		return body, errs
-	}
-	return body, errs
+	return *co, err
+
 }

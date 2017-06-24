@@ -1,11 +1,9 @@
 package hatena
 
 import (
-	"encoding/json"
+	"fmt"
 	"net/url"
 	"regexp"
-
-	"github.com/parnurzeal/gorequest"
 )
 
 const (
@@ -21,7 +19,7 @@ type UserStars struct {
 		Yellow string `json:"yellow"`
 	} `json:"count"`
 	Title     string `json:"title"`
-	Uri       string `json:"uri"`
+	URI       string `json:"uri"`
 	StarCount int    `json:"star_count"`
 }
 
@@ -32,7 +30,7 @@ type CommentStars struct {
 			Name  string `json:"name"`
 		} `json:"stars"`
 		CanComment int    `json:"can_comment"`
-		Uri        string `json:"uri"`
+		URI        string `json:"uri"`
 	} `json:"entries"`
 	CanComment int `json:"can_comment"`
 }
@@ -50,17 +48,10 @@ func (c *Client) UserStar(username string) (*UserStars, error) {
 
 	req := starURL + "blog.json?" + val.Encode()
 
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	us := &UserStars{}
+	err := c.get(req, us, "json")
 
-	u := UserStars{}
-	if resp.StatusCode != 200 {
-		return &u, errs[0]
-	}
-
-	err := json.Unmarshal([]byte(body), &u)
-
-	return &u, err
+	return us, err
 }
 
 //bookmarkCommentUrl format : http://b.hatena.ne.jp/{userId}/{YYYYMMDD}#bookmark-{eid}
@@ -71,24 +62,20 @@ func CommentStar(bookmarkCommentUrl string) (*CommentStars, error) {
 func (c *Client) CommentStar(bookmarkCommentUrl string) (*CommentStars, error) {
 
 	//Validation URL format
-	res, regErr := regexp.MatchString("http:\\/\\/b\\.hatena\\.ne\\.jp\\/(.*)\\/[0-9]{8}#bookmark-[0-9]*", bookmarkCommentUrl)
-	if res != true {
-		return &CommentStars{}, regErr.(error)
+	matched, err := regexp.MatchString("http:\\/\\/b\\.hatena\\.ne\\.jp\\/(.*)\\/[0-9]{8}#bookmark-[0-9]*", bookmarkCommentUrl)
+	if !matched {
+		return nil, err
 	}
 
 	val := url.Values{}
 	val.Add("uri", bookmarkCommentUrl)
 
 	req := starURL + "entry.json?" + val.Encode()
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	fmt.Println(req)
 
-	s := CommentStars{}
-	if resp.StatusCode != 200 {
-		return &s, errs[0]
-	}
+	cs := &CommentStars{}
+	err = c.get(req, cs, "json")
+	fmt.Println(cs)
 
-	err := json.Unmarshal([]byte(body), &s)
-
-	return &s, err
+	return cs, err
 }

@@ -1,10 +1,7 @@
 package hatena
 
 import (
-	"encoding/xml"
 	"net/url"
-
-	"github.com/parnurzeal/gorequest"
 )
 
 const (
@@ -34,17 +31,11 @@ func HotEntryAll() (*Entries, error) {
 func (c *Client) HotEntryAll() (*Entries, error) {
 
 	req := feedURL + "hotentry?mode=rss"
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
 
-	e := Entries{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
+	e := &Entries{}
+	err := c.get(req, e, "xml")
 
-	err := xml.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }
 
 // Categories : social, economics, life, knowledge, it, fun, entertainment, game
@@ -56,17 +47,10 @@ func (c *Client) HotEntry(category string) (*Entries, error) {
 
 	req := feedURL + "hotentry/" + category + ".rss"
 
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	e := &Entries{}
+	err := c.get(req, e, "xml")
 
-	e := Entries{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
-
-	err := xml.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }
 
 func NewEntryAll(options map[string]string) (*Entries, error) {
@@ -82,17 +66,11 @@ func (c *Client) NewEntryAll(options map[string]string) (*Entries, error) {
 	}
 
 	req := feedURL + "entrylist?" + val.Encode()
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
 
-	e := Entries{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
+	e := &Entries{}
+	err := c.get(req, e, "xml")
 
-	err := xml.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }
 
 // Categories : social, economics, life, knowledge, it, fun, entertainment, game
@@ -109,17 +87,10 @@ func (c *Client) NewEntry(category string, options map[string]string) (*Entries,
 	}
 	req := feedURL + "entrylist/" + category + ".rss?" + val.Encode()
 
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	e := &Entries{}
+	err := c.get(req, e, "xml")
 
-	e := Entries{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
-
-	err := xml.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }
 
 // searchType : keyword, title, tag
@@ -140,17 +111,10 @@ func (c *Client) SearchEntry(searchWord string, searchType string, options map[s
 
 	req := feedURL + "search/" + searchType + "?" + val.Encode()
 
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	e := &Entries{}
+	err := c.get(req, e, "xml")
 
-	e := Entries{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
-
-	err := xml.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }
 
 // Option : sort=count, sort=eid, sort=recent
@@ -170,15 +134,8 @@ func (c *Client) SearchUrlEntry(searchUrl string, options map[string]string) (*E
 
 	req := feedURL + "entrylist?" + val.Encode()
 
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
+	e := &Entries{}
+	err := c.get(req, e, "xml")
 
-	e := Entries{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
-
-	err := xml.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }

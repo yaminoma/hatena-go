@@ -13,8 +13,8 @@ import (
 // You must register an application at Hatena's developer portal
 // and enter this value.
 const redirectURI = "http://localhost:8080/callback"
-const ConsumerKey = "***************"
-const ConsumerSecret = "***************"
+const ConsumerKey = "2wDjTLiLsfRplA=="
+const ConsumerSecret = "ts+bQgDIp/GI1I5q+v8Ca+12pA0="
 
 var (
 	scopes = []string{hatena.HatenaReadPrivate}

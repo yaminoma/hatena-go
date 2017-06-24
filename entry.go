@@ -1,10 +1,6 @@
 package hatena
 
-import (
-	"encoding/json"
-
-	"github.com/parnurzeal/gorequest"
-)
+import ()
 
 const (
 	entryURL = "http://b.hatena.ne.jp/entry/json/"
@@ -44,15 +40,9 @@ func EntryInfo(url string) (*EntryInformation, error) {
 func (c *Client) EntryInfo(url string) (*EntryInformation, error) {
 
 	req := entryURL + "?url=" + url
-	request := gorequest.New()
-	resp, body, errs := request.Get(req).End()
 
-	e := EntryInformation{}
-	if resp.StatusCode != 200 {
-		return &e, errs[0]
-	}
+	e := &EntryInformation{}
+	err := c.get(req, e, "json")
 
-	err := json.Unmarshal([]byte(body), &e)
-
-	return &e, err
+	return e, err
 }

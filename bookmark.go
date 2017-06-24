@@ -41,11 +41,11 @@ type BookmarkResponse struct {
 //	return body, errs
 //}
 
-//func Add(urlStr string, comment string, tags []string) (response string, err error) {
+//func BookmarkAdd(urlStr string, comment string, tags []string) (result string, err error) {
 //	return Authenticator.Add(urlStr, comment, tags)
 //}
 //
-//func (a *Authenticator) Add(urlStr string, comment string, tags []string) (response string, err error) {
+//func (a *Authenticator) BookmarkAdd(urlStr string, comment string, tags []string) (result string, err error) {
 //
 //	v := url.Values{}
 //	v.Set("url", urlStr)

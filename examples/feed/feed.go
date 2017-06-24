@@ -9,31 +9,33 @@ import (
 
 func main() {
 
-	//
-	// Get IT category feed
-	//
-	options := map[string]string{
+	// Get IT-category feed
+	newOpts := map[string]string{
 		"sort":      "popular",
 		"threshold": "10",
 	}
-	res, err := hatena.NewEntry("it", options)
-
-	//
-	// Search entry from matching url
-	//
-
-	//options := map[string]string{
-	//	"sort": "count",
-	//}
-	//res, err := hatena.SearchUrlEntry("hatena.ne.jp", options)
-
+	new, err := hatena.NewEntry("it", newOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if res.Entry != nil {
-		fmt.Println("Entries:")
-		for _, entry := range res.Entry {
+	if new.Entry != nil {
+		for _, entry := range new.Entry {
+			fmt.Println(entry.Subject, entry.Title)
+		}
+	}
+
+	// Search entry from matching url
+	searchOpts := map[string]string{
+		"sort": "count",
+	}
+	search, err := hatena.SearchUrlEntry("hatena.ne.jp", searchOpts)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if search.Entry != nil {
+		for _, entry := range search.Entry {
 			fmt.Println(entry.Subject, entry.Title)
 		}
 	}

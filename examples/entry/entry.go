@@ -15,7 +15,6 @@ func main() {
 	}
 
 	if res.Bookmarks != nil {
-		fmt.Println("Related Bookmark Entry:")
 		for _, entry := range res.RelatedEntries {
 			fmt.Println(entry.Title, entry.Url)
 		}

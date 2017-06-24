@@ -1,6 +1,9 @@
 package hatena
 
 import (
+	"encoding/json"
+	"encoding/xml"
+	"errors"
 	"fmt"
 	_ "log"
 	"net/http"
@@ -49,3 +52,26 @@ type Client struct {
 //
 //	return
 //}
+
+func (c *Client) get(url string, result interface{}, format string) error {
+	resp, err := c.http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("http status is not 200")
+	}
+
+	if format == "xml" {
+		err = xml.NewDecoder(resp.Body).Decode(result)
+	} else if format == "json" {
+		err = json.NewDecoder(resp.Body).Decode(result)
+	}
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
