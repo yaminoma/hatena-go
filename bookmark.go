@@ -3,8 +3,6 @@ package hatena
 import (
 	"fmt"
 	_ "net/url"
-
-	_ "github.com/parnurzeal/gorequest"
 )
 
 var (
@@ -31,14 +29,10 @@ type BookmarkResponse struct {
 //	v.Set("url", urlStr)
 //	req := bookmarkURL + "?" + v.Encode()
 //
-//	request := gorequest.New()
-//	resp, body, errs := request.Get(req).End()
+//	b := new(string)
+//	err := c.get(req, b, "json")
 //
-//	if resp.StatusCode != 200 {
-//		return body, errs
-//	}
-//
-//	return body, errs
+//	return b, errs
 //}
 
 //func BookmarkAdd(urlStr string, comment string, tags []string) (result string, err error) {
@@ -51,12 +45,8 @@ type BookmarkResponse struct {
 //	v.Set("url", urlStr)
 //	req := countURL + "?" + v.Encode()
 //
-//	request := gorequest.New()
-//	resp, body, errs := request.Get(req).End()
+//	b := new(string)
+//	err := c.get(req, b, "json")
 //
-//	if resp.StatusCode != 200 {
-//		return body, errs
-//	}
-//
-//	return body, errs
+//	return b, errs
 //}
