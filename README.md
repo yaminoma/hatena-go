@@ -5,7 +5,7 @@ hatena-go
 
 Overview
 ------------------
-This is a Go wrapper for working with [Hatena](http://developer.hatena.ne.jp/ja/documents/bookmark/apis/rest) WEB API.
+This is a Go wrapper for working with [Hatena](http://developer.hatena.ne.jp/ja/documents/bookmark/apis/rest) WEB API.  
 It aims to support Hatena Bookmark Web API Endpoint.
 
 Installation
@@ -14,7 +14,7 @@ Installation
 
 Authentication
 ------------------
-Hatena uses OAuth1 for authentication and authorization.
+Hatena uses OAuth1 for authentication and authorization.  
 A part of Web API endpoints require an access token.
 
 ````Go
@@ -22,7 +22,7 @@ auth := hatena.NewAuthenticator(ConsumerKey, ConsumerSecret, redirectURI, scopes
 
 ````
 
-Hatena's Web API Authorization Guide: 
+Hatena's Web API Authorization Guide:  
 http://developer.hatena.ne.jp/ja/documents/auth/apis/oauth
 
 API Examples

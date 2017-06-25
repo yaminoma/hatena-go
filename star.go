@@ -21,7 +21,7 @@ type UserStars struct {
 	StarCount int    `json:"star_count"`
 }
 
-type CommentStars struct {
+type Star struct {
 	Entries []struct {
 		Stars []struct {
 			Quote string `json:"quote"`
@@ -68,7 +68,7 @@ func (c *Client) GetStar(urlStr string) (*Star, error) {
 	req := starURL + "entry.json?" + val.Encode()
 
 	s := &Star{}
-	err = c.get(req, s, "json")
+	err := c.get(req, s, "json")
 
 	return s, err
 }

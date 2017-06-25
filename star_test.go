@@ -81,14 +81,14 @@ func TestClient_GetStar(t *testing.T) {
 		wantErr bool
 	}{
 	//		0: {
-	//			name: "TestClient_CommentStar",
+	//			name: "TestClient_Star",
 	//			fields: fields{
 	//				http: new(http.Client),
 	//			},
 	//			args: args{
 	//				bookmarkCommentUrl: "http://b.hatena.ne.jp/jkondo/20160330#bookmark-283654293",
 	//			},
-	//			want: &CommentStars{
+	//			want: &Star{
 	//				Entries: []struct {
 	//					Stars      []struct{} `json:"stars"`
 	//					CanComment int        `json:"can_comment"`
@@ -117,13 +117,13 @@ func TestClient_GetStar(t *testing.T) {
 			c := &Client{
 				http: tt.fields.http,
 			}
-			got, err := c.Star(tt.args.urlStr)
+			got, err := c.GetStar(tt.args.urlStr)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Client.Star() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Client.GetStar() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.Star() = %v, want %v", got, tt.want)
+				t.Errorf("Client.GetStar() = %v, want %v", got, tt.want)
 			}
 		})
 	}
