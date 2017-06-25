@@ -1,9 +1,7 @@
 package hatena
 
 import (
-	"fmt"
 	"net/url"
-	"regexp"
 )
 
 const (
@@ -35,6 +33,8 @@ type CommentStars struct {
 	CanComment int `json:"can_comment"`
 }
 
+// はてなスターカウントAPI
+// 「指定したブログのエントリに全部でいくつのスターがつけられているのか」という総数を取得できるAPI
 func UserStar(username string) (*UserStars, error) {
 	return DefaultClient.UserStar(username)
 }
@@ -54,28 +54,21 @@ func (c *Client) UserStar(username string) (*UserStars, error) {
 	return us, err
 }
 
-//bookmarkCommentUrl format : http://b.hatena.ne.jp/{userId}/{YYYYMMDD}#bookmark-{eid}
-func CommentStar(bookmarkCommentUrl string) (*CommentStars, error) {
-	return DefaultClient.CommentStar(bookmarkCommentUrl)
+// はてなスター取得 API
+// ある URL に対して付与されたスターを取得できる。
+func GetStar(urlStr string) (*Star, error) {
+	return DefaultClient.GetStar(urlStr)
 }
 
-func (c *Client) CommentStar(bookmarkCommentUrl string) (*CommentStars, error) {
-
-	//Validation URL format
-	matched, err := regexp.MatchString("http:\\/\\/b\\.hatena\\.ne\\.jp\\/(.*)\\/[0-9]{8}#bookmark-[0-9]*", bookmarkCommentUrl)
-	if !matched {
-		return nil, err
-	}
+func (c *Client) GetStar(urlStr string) (*Star, error) {
 
 	val := url.Values{}
-	val.Add("uri", bookmarkCommentUrl)
+	val.Add("uri", urlStr)
 
 	req := starURL + "entry.json?" + val.Encode()
-	fmt.Println(req)
 
-	cs := &CommentStars{}
-	err = c.get(req, cs, "json")
-	fmt.Println(cs)
+	s := &Star{}
+	err = c.get(req, s, "json")
 
-	return cs, err
+	return s, err
 }

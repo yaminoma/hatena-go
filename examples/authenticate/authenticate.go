@@ -1,10 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	_ "log"
 	"net/http"
-	"net/url"
 
 	"github.com/8pockets/hatena-go"
 )
@@ -12,9 +11,9 @@ import (
 // redirectURI is the OAuth redirect URI for the application.
 // You must register an application at Hatena's developer portal
 // and enter this value.
-const redirectURI = "http://localhost:8080/callback"
 const ConsumerKey = "2wDjTLiLsfRplA=="
 const ConsumerSecret = "ts+bQgDIp/GI1I5q+v8Ca+12pA0="
+const redirectURI = "http://localhost:8080/callback"
 
 var (
 	scopes = []string{hatena.HatenaReadPrivate}
@@ -30,35 +29,37 @@ func main() {
 	http.Handle("/profile", &hatena.AuthHandler{Handler: profile})
 
 	http.ListenAndServe(":8080", nil)
-
-	//response, err := hatena.Get("https://api.nasa.gov/")
 }
 
 func authUrl(w http.ResponseWriter, r *http.Request) {
-	url := auth.AuthURL(w, r)
-	fmt.Fprintf(w, "<a href='%s'>Auth</a>", url)
-	fmt.Printf("1. Go to %s\n2. Authorize the application\n", url)
+	url, err := auth.AuthURL(w, r)
+	if err != nil {
+		http.Error(w, "Error getting temp cred, "+err.Error(), 500)
+		return
+	}
+	fmt.Fprintf(w, "<a href='%s'>Authentication</a>", url)
 }
 
 func token(w http.ResponseWriter, r *http.Request) {
-	credentials := auth.Token(w, r)
-	fmt.Printf("Token: %s, Secret: %s", credentials.Token, credentials.Secret)
+	credentials, err := auth.Token(w, r)
+	if err != nil {
+		http.Error(w, "Error getting temp cred, "+err.Error(), 500)
+		return
+	}
 
 	http.Redirect(w, r, "/profile", 302)
 }
 
 func profile(w http.ResponseWriter, r *http.Request) {
-	var dms []map[string]interface{}
 
-	form := url.Values{}
-	form.Add("url", "http://www.fashionsnap.com/the-posts/2017-01-04/rap-year-book/")
+	prof, _ := auth.GetProfile()
+	json.NewEncoder(w).Encode(prof)
 
-	if err := auth.ApiPost(
-		"http://api.b.hatena.ne.jp/1/my/bookmark",
-		form,
-		&dms); err != nil {
-		http.Error(w, "Error getting api, "+err.Error(), 500)
-		return
-	}
-	fmt.Fprintf(w, "%s", dms)
+	//resp, err := auth.GetBookmarkedEntry("http://8pockets.hatenablog.com/entry/2013/12/30/162516")
+	//if err != nil {
+	//	http.Error(w, "ERROR: "+err.Error(), 500)
+	//	return
+	//}
+	//json.NewEncoder(w).Encode(resp)
+
 }

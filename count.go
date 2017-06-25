@@ -1,3 +1,4 @@
+// はてなブックマーク件数取得API
 package hatena
 
 import (

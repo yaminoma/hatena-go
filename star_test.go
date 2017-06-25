@@ -66,18 +66,18 @@ func TestClient_UserStar(t *testing.T) {
 	}
 }
 
-func TestClient_CommentStar(t *testing.T) {
+func TestClient_GetStar(t *testing.T) {
 	type fields struct {
 		http *http.Client
 	}
 	type args struct {
-		bookmarkCommentUrl string
+		urlStr string
 	}
 	tests := []struct {
 		name    string
 		fields  fields
 		args    args
-		want    *CommentStars
+		want    *Star
 		wantErr bool
 	}{
 	//		0: {
@@ -117,13 +117,13 @@ func TestClient_CommentStar(t *testing.T) {
 			c := &Client{
 				http: tt.fields.http,
 			}
-			got, err := c.CommentStar(tt.args.bookmarkCommentUrl)
+			got, err := c.Star(tt.args.urlStr)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Client.CommentStar() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Client.Star() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.CommentStar() = %v, want %v", got, tt.want)
+				t.Errorf("Client.Star() = %v, want %v", got, tt.want)
 			}
 		})
 	}

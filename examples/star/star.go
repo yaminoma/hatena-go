@@ -19,9 +19,9 @@ func main() {
 	fmt.Println(res1.StarCount)
 
 	//
-	// Count hatena comment star
+	// Count hatena star
 	//
-	res2, err := hatena.CommentStar("http://b.hatena.ne.jp/jkondo/20150210#bookmark-241358174")
+	res2, err := hatena.GetStar("http://b.hatena.ne.jp/jkondo/20150210#bookmark-241358174")
 
 	if err != nil {
 		log.Fatal(err)
