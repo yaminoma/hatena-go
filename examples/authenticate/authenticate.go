@@ -41,7 +41,7 @@ func authUrl(w http.ResponseWriter, r *http.Request) {
 }
 
 func token(w http.ResponseWriter, r *http.Request) {
-	credentials, err := auth.Token(w, r)
+	_, err := auth.Token(w, r)
 	if err != nil {
 		http.Error(w, "Error getting temp cred, "+err.Error(), 500)
 		return
