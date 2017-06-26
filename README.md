@@ -1,8 +1,10 @@
 hatena-go
 ===
 [![GoDoc](http://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://godoc.org/github.com/8pockets/hatena-go)
-[![Coverage Status](http://img.shields.io/coveralls/8pockets/hatena-go/master.svg?style=flat-square)](https://coveralls.io/github/8pockets/hatena-go?branch=master)
 [![Build Status](https://img.shields.io/travis/8pockets/hatena-go.svg?style=flat-square)](https://travis-ci.org/8pockets/hatena-go)
+[![Coverage Status](http://img.shields.io/coveralls/8pockets/hatena-go/master.svg?style=flat-square)](https://coveralls.io/github/8pockets/hatena-go?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/8pockets/hatena-go?style=flat-square)](https://goreportcard.com/report/github.com/8pockets/hatena-go)
+[![Sourcegraph for Repo Reference Count](https://img.shields.io/sourcegraph/rrc//github.com/8pockets/hatena-go.svg?style=flat-square)]()
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/8pockets/hatena-go/blob/master/LICENSE)
 
 Overview
