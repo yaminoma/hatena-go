@@ -1,4 +1,3 @@
-// はてなブックマーク件数取得API
 package hatena
 
 import (
@@ -9,6 +8,7 @@ const (
 	countURL = "http://api.b.st-hatena.com/entry.count"
 )
 
+// はてなブックマーク件数取得API
 func Count(query string) (int, error) {
 	return DefaultClient.Count(query)
 }

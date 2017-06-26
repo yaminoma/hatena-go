@@ -24,9 +24,8 @@ var (
 func main() {
 	// first start an HTTP server
 	http.HandleFunc("/auth", authUrl)
-
 	http.HandleFunc("/callback", token)
-	http.Handle("/profile", &hatena.AuthHandler{Handler: profile})
+	http.HandleFunc("/profile", profile)
 
 	http.ListenAndServe(":8080", nil)
 }
@@ -41,6 +40,7 @@ func authUrl(w http.ResponseWriter, r *http.Request) {
 }
 
 func token(w http.ResponseWriter, r *http.Request) {
+	// you can get *oauth.Credentials struct in first param.
 	_, err := auth.Token(w, r)
 	if err != nil {
 		http.Error(w, "Error getting temp cred, "+err.Error(), 500)
@@ -61,5 +61,4 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	//	return
 	//}
 	//json.NewEncoder(w).Encode(resp)
-
 }

@@ -37,52 +37,40 @@ type BookmarkForm struct {
 
 // ブックマーク API
 // ブックマーク情報を取得する
-func GetBookmark(uri string) (*Bookmark, error) {
-	return oauthClient.GetBookmark(uri)
-}
-
-func (o *Authenticator) GetBookmark(uri string) (*Bookmark, error) {
+func (a *Authenticator) GetBookmark(uri string) (*Bookmark, error) {
 
 	form := url.Values{}
 	form.Set("url", uri)
 
 	b := &Bookmark{}
-	err := o.apiGet(bookmarkURL, form, b)
+	err := a.apiGet(bookmarkURL, form, b)
 
 	return b, err
 }
 
 // ブックマーク API
 // ブックマークを追加または更新する
-func AddBookmark(uri string, br BookmarkForm) (*Bookmark, error) {
-	return oauthClient.AddBookmark(uri, br)
-}
-
-func (o *Authenticator) AddBookmark(uri string, br BookmarkForm) (*Bookmark, error) {
+func (a *Authenticator) AddBookmark(uri string, br BookmarkForm) (*Bookmark, error) {
 
 	// BookmarkFormをurl.Valueに変換
 	form := url.Values{}
 	form.Set("url", uri)
 
 	b := &Bookmark{}
-	err := o.apiPost(bookmarkURL, form, b)
+	err := a.apiPost(bookmarkURL, form, b)
 
 	return b, err
 }
 
 // ブックマーク API
 // ブックマークを削除する
-func DeleteBookmark(uri string) error {
-	return oauthClient.DeleteBookmark(uri)
-}
-
-func (o *Authenticator) DeleteBookmark(uri string) error {
+func (a *Authenticator) DeleteBookmark(uri string) error {
 
 	form := url.Values{}
 	form.Set("url", uri)
 
 	b := &Bookmark{}
-	err := o.apiDelete(bookmarkURL, form, b)
+	err := a.apiDelete(bookmarkURL, form, b)
 
 	return err
 }
@@ -106,17 +94,13 @@ type BookmarkEntry struct {
 
 // エントリー API
 // ブックマークされたエントリーの情報を取得する
-func GetBookmarkedEntry(uri string) (*BookmarkEntry, error) {
-	return oauthClient.GetBookmarkedEntry(uri)
-}
-
-func (o *Authenticator) GetBookmarkedEntry(uri string) (*BookmarkEntry, error) {
+func (a *Authenticator) GetBookmarkedEntry(uri string) (*BookmarkEntry, error) {
 
 	form := url.Values{}
 	form.Set("url", uri)
 
 	b := &BookmarkEntry{}
-	err := o.apiGet(bookmarkEntryURL, form, b)
+	err := a.apiGet(bookmarkEntryURL, form, b)
 
 	return b, err
 }

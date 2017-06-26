@@ -31,16 +31,13 @@ type Profile struct {
 	IsStaff             bool   `json:"is_staff"`
 }
 
-func GetProfile() (*Profile, error) {
-	return oauthClient.GetProfile()
-}
-
-func (o *Authenticator) GetProfile() (*Profile, error) {
+// はてなブックマークの
+func (a *Authenticator) GetProfile() (*Profile, error) {
 
 	form := url.Values{}
 
 	p := &Profile{}
-	err := o.apiGet(profileURL, form, p)
+	err := a.apiGet(profileURL, form, p)
 
 	return p, err
 }

@@ -1,4 +1,3 @@
-// はてなブックマークエントリー情報取得API
 package hatena
 
 import ()
@@ -33,6 +32,7 @@ type RelatedEntry struct {
 	EntryUrl string `json:"entry_url"`
 }
 
+// はてなブックマークエントリー情報取得API
 func EntryInfo(url string) (*EntryInformation, error) {
 	return DefaultClient.EntryInfo(url)
 }

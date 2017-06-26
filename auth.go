@@ -27,7 +27,7 @@ const (
 var oauthClient = NewAuthenticator("", "", "", []string{})
 
 type Authenticator struct {
-	config      oauth.Client
+	client      oauth.Client
 	redirectUri string
 	scopes      url.Values
 	cred        *oauth.Credentials
@@ -50,14 +50,14 @@ func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri str
 	}
 
 	return &Authenticator{
-		config:      oauthClient,
+		client:      oauthClient,
 		redirectUri: redirectUri,
 		scopes:      scopeParam,
 	}
 }
 
-func (auth *Authenticator) AuthURL(w http.ResponseWriter, r *http.Request) (string, error) {
-	tempCred, err := auth.config.RequestTemporaryCredentials(nil, auth.redirectUri, auth.scopes)
+func (a *Authenticator) AuthURL(w http.ResponseWriter, r *http.Request) (string, error) {
+	tempCred, err := a.client.RequestTemporaryCredentials(nil, a.redirectUri, a.scopes)
 	if err != nil {
 		return "", err
 	}
@@ -69,10 +69,10 @@ func (auth *Authenticator) AuthURL(w http.ResponseWriter, r *http.Request) (stri
 		return "", err
 	}
 
-	return auth.config.AuthorizationURL(tempCred, nil), nil
+	return a.client.AuthorizationURL(tempCred, nil), nil
 }
 
-func (auth *Authenticator) Token(w http.ResponseWriter, r *http.Request) (*oauth.Credentials, error) {
+func (a *Authenticator) Token(w http.ResponseWriter, r *http.Request) (*oauth.Credentials, error) {
 
 	s := session.Get(r)
 	tempCred, ok := s[tempCredKey].(*oauth.Credentials)
@@ -83,11 +83,11 @@ func (auth *Authenticator) Token(w http.ResponseWriter, r *http.Request) (*oauth
 		http.Error(w, "Unknown oauth_token.", 500)
 	}
 
-	tokenCred, _, err := auth.config.RequestToken(nil, tempCred, r.FormValue("oauth_verifier"))
+	tokenCred, _, err := a.client.RequestToken(nil, tempCred, r.FormValue("oauth_verifier"))
 	if err != nil {
 		log.Fatal(w, "Error getting request token, "+err.Error(), 500)
 	}
-	auth.cred = tokenCred
+	a.cred = tokenCred
 
 	delete(s, tempCredKey)
 	s[tokenCredKey] = tokenCred
@@ -95,22 +95,12 @@ func (auth *Authenticator) Token(w http.ResponseWriter, r *http.Request) (*oauth
 		return nil, err
 	}
 
-	return auth.cred, nil
-}
-
-// authHandler reads the auth cookie and invokes a handler with the result.
-type AuthHandler struct {
-	Handler  func(w http.ResponseWriter, r *http.Request)
-	Optional bool
-}
-
-func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.Handler(w, r)
+	return a.cred, nil
 }
 
 // apiGet issues a GET request to the Hatena API and decodes the response JSON to data.
-func (auth *Authenticator) apiGet(urlStr string, form url.Values, result interface{}) error {
-	resp, err := auth.config.Get(nil, auth.cred, urlStr, form)
+func (a *Authenticator) apiGet(urlStr string, form url.Values, result interface{}) error {
+	resp, err := a.client.Get(nil, a.cred, urlStr, form)
 	if err != nil {
 		return err
 	}
@@ -119,8 +109,8 @@ func (auth *Authenticator) apiGet(urlStr string, form url.Values, result interfa
 }
 
 // apiPost issues a POST request to the Hatena API and decodes the response JSON to data.
-func (auth *Authenticator) apiPost(urlStr string, form url.Values, result interface{}) error {
-	resp, err := auth.config.Post(nil, auth.cred, urlStr, form)
+func (a *Authenticator) apiPost(urlStr string, form url.Values, result interface{}) error {
+	resp, err := a.client.Post(nil, a.cred, urlStr, form)
 	if err != nil {
 		return err
 	}
@@ -129,8 +119,8 @@ func (auth *Authenticator) apiPost(urlStr string, form url.Values, result interf
 }
 
 // apiDelete issues a DELETE request to the Hatena API and decodes the response JSON to data.
-func (auth *Authenticator) apiDelete(urlStr string, form url.Values, result interface{}) error {
-	resp, err := auth.config.Delete(nil, auth.cred, urlStr, form)
+func (a *Authenticator) apiDelete(urlStr string, form url.Values, result interface{}) error {
+	resp, err := a.client.Delete(nil, a.cred, urlStr, form)
 	if err != nil {
 		return err
 	}
