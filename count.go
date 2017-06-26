@@ -9,8 +9,8 @@ const (
 )
 
 // はてなブックマーク件数取得API
-func Count(query string) (int, error) {
-	return DefaultClient.Count(query)
+func Count(urlStr string) (int, error) {
+	return DefaultClient.Count(urlStr)
 }
 
 func (c *Client) Count(urlStr string) (int, error) {
@@ -23,5 +23,4 @@ func (c *Client) Count(urlStr string) (int, error) {
 	err := c.get(req, co, "json")
 
 	return *co, err
-
 }

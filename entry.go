@@ -33,13 +33,13 @@ type RelatedEntry struct {
 }
 
 // はてなブックマークエントリー情報取得API
-func EntryInfo(url string) (*EntryInformation, error) {
-	return DefaultClient.EntryInfo(url)
+func EntryInfo(urlStr string) (*EntryInformation, error) {
+	return DefaultClient.EntryInfo(urlStr)
 }
 
-func (c *Client) EntryInfo(url string) (*EntryInformation, error) {
+func (c *Client) EntryInfo(urlStr string) (*EntryInformation, error) {
 
-	req := entryURL + "?url=" + url
+	req := entryURL + "?url=" + urlStr
 
 	e := &EntryInformation{}
 	err := c.get(req, e, "json")
