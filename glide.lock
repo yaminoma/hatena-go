@@ -1,0 +1,9 @@
+hash: bc14f62f045c2a3c9b0cf12a9461ab7228ad0de7b129f5c0e6d4fe4b186f50d0
+updated: 2017-07-19T12:03:43.071040289+09:00
+imports:
+- name: github.com/garyburd/go-oauth
+  version: c20bd6231dc6c8d00f72a79fb679e8caa1316212
+  subpackages:
+  - examples/session
+  - oauth
+testImports: []
