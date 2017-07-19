@@ -7,27 +7,9 @@
   packages = ["examples/session","oauth"]
   revision = "c20bd6231dc6c8d00f72a79fb679e8caa1316212"
 
-[[projects]]
-  name = "github.com/gorilla/context"
-  packages = ["."]
-  revision = "1ea25387ff6f684839d82767c1733ff4d4d15d0a"
-  version = "v1.1"
-
-[[projects]]
-  name = "github.com/gorilla/securecookie"
-  packages = ["."]
-  revision = "667fe4e3466a040b780561fe9b51a83a3753eefc"
-  version = "v1.1"
-
-[[projects]]
-  name = "github.com/gorilla/sessions"
-  packages = ["."]
-  revision = "ca9ada44574153444b00d3fd9c8559e4cc95f896"
-  version = "v1.1"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "98bd5c97f56348b0c910bd203b35438ebfe8a5206fcfd99e0c4512d5a105786a"
+  inputs-digest = "b3358b45cc6eaeaa9cc590ee82c917758bfad27ba32d29e5903b91c627836b8a"
   solver-name = "gps-cdcl"
   solver-version = 1

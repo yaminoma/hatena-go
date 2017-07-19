@@ -3,6 +3,7 @@ hatena-go
 [![GoDoc](http://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://godoc.org/github.com/8pockets/hatena-go)
 [![Build Status](https://img.shields.io/travis/8pockets/hatena-go.svg?style=flat-square)](https://travis-ci.org/8pockets/hatena-go)
 [![Coverage Status](http://img.shields.io/coveralls/8pockets/hatena-go/master.svg?style=flat-square)](https://coveralls.io/github/8pockets/hatena-go?branch=master)
+[![Codacy grade](https://img.shields.io/codacy/grade/8b8484dd77884448bf07845063fcafcf.svg?style=flat-square)](https://www.codacy.com/app/8pockets/hatena-go/dashboard)
 [![Go Report Card](https://goreportcard.com/badge/github.com/8pockets/hatena-go?style=flat-square)](https://goreportcard.com/report/github.com/8pockets/hatena-go)
 [![Sourcegraph for Repo Reference Count](https://img.shields.io/sourcegraph/rrc//github.com/8pockets/hatena-go.svg?style=flat-square)](https://sourcegraph.com/github.com/8pockets/hatena-go)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/8pockets/hatena-go/blob/master/LICENSE)
