@@ -214,7 +214,7 @@ func TestClient_NewEntry(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientFile(http.StatusOK, "test_data/newEntry.txt")
+			c := testClientFile(http.StatusOK, "test_data/newentry.txt")
 			got, err := c.NewEntry(tt.args.category, tt.args.options)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.NewEntry() error = %v, wantErr %v", err, tt.wantErr)
@@ -274,7 +274,7 @@ func TestClient_SearchEntry(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientFile(http.StatusOK, "test_data/searchEntry.txt")
+			c := testClientFile(http.StatusOK, "test_data/search_entry.txt")
 			got, err := c.SearchEntry(tt.args.searchWord, tt.args.searchType, tt.args.options)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.SearchEntry() error = %v, wantErr %v", err, tt.wantErr)
@@ -336,7 +336,7 @@ func TestClient_SearchUrlEntry(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientFile(http.StatusOK, "test_data/searchUrlEntry.txt")
+			c := testClientFile(http.StatusOK, "test_data/searchurl_entry.txt")
 			got, err := c.SearchUrlEntry(tt.args.searchUrl, tt.args.options)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.SearchUrlEntry() error = %v, wantErr %v", err, tt.wantErr)
