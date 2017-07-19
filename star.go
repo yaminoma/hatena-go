@@ -21,16 +21,24 @@ type UserStars struct {
 	StarCount int    `json:"star_count"`
 }
 
+type EntryStars struct {
+	Entries    []EntryPost `json:"entries"`
+	CanComment int         `json:"can_comment"`
+}
+type EntryPost struct {
+	Stars        []Star         `json:"stars"`
+	CanComment   int            `json:"can_comment"`
+	ColoredStars []ColoredStars `json:"colored_stars"`
+	URI          string         `json:"uri"`
+}
 type Star struct {
-	Entries []struct {
-		Stars []struct {
-			Quote string `json:"quote"`
-			Name  string `json:"name"`
-		} `json:"stars"`
-		CanComment int    `json:"can_comment"`
-		URI        string `json:"uri"`
-	} `json:"entries"`
-	CanComment int `json:"can_comment"`
+	Count int    `json:"count"`
+	Quote string `json:"quote"`
+	Name  string `json:"name"`
+}
+type ColoredStars struct {
+	Stars []Star `json:"stars"`
+	Color string `json:"color"`
 }
 
 // はてなスターカウントAPI
@@ -56,19 +64,19 @@ func (c *Client) UserStar(username string) (*UserStars, error) {
 
 // はてなスター取得 API
 // ある URL に対して付与されたスターを取得できる。
-func GetStar(urlStr string) (*Star, error) {
+func GetStar(urlStr string) (*EntryStars, error) {
 	return DefaultClient.GetStar(urlStr)
 }
 
-func (c *Client) GetStar(urlStr string) (*Star, error) {
+func (c *Client) GetStar(urlStr string) (*EntryStars, error) {
 
 	val := url.Values{}
 	val.Add("uri", urlStr)
 
 	req := starURL + "entry.json?" + val.Encode()
 
-	s := &Star{}
-	err := c.get(req, s, "json")
+	e := &EntryStars{}
+	err := c.get(req, e, "json")
 
-	return s, err
+	return e, err
 }

@@ -4,20 +4,15 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"fmt"
-	_ "log"
 	"net/http"
 	"net/url"
 )
 
 const (
-	acceptHeader = "application/json"
-	version      = 1
+	version = 1
 )
 
 var (
-	defaultBaseURL = fmt.Sprintf("http://api.b.hatena.ne.jp/%d", version)
-
 	// DefaultClient is the default client that is used by the wrapper functions
 	// that don't require authorization.  If you need to authenticate, create
 	// your own client with `Authenticator.NewClient`.
@@ -46,7 +41,9 @@ func (c *Client) get(url string, result interface{}, format string) error {
 	}
 
 	if format == "xml" {
-		err = xml.NewDecoder(resp.Body).Decode(result)
+		decoder := xml.NewDecoder(resp.Body)
+		decoder.Strict = false
+		decoder.Decode(result)
 	} else if format == "json" {
 		err = json.NewDecoder(resp.Body).Decode(result)
 	}

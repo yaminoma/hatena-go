@@ -2,41 +2,9 @@ package hatena
 
 import (
 	"net/http"
+	"strconv"
 	"testing"
 )
-
-func TestCount(t *testing.T) {
-	type args struct {
-		urlStr string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    int
-		wantErr bool
-	}{
-		0: {
-			name: "TestCount",
-			args: args{
-				urlStr: "http://www.hatena.ne.jp/",
-			},
-			want:    5818,
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := Count(tt.args.urlStr)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Count() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got < tt.want {
-				t.Errorf("Count() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
 
 func TestClient_Count(t *testing.T) {
 	type fields struct {
@@ -49,7 +17,7 @@ func TestClient_Count(t *testing.T) {
 		name    string
 		fields  fields
 		args    args
-		want    int
+		want    string
 		wantErr bool
 	}{
 		0: {
@@ -60,22 +28,22 @@ func TestClient_Count(t *testing.T) {
 			args: args{
 				urlStr: "http://www.hatena.ne.jp/",
 			},
-			want:    5818,
+			want:    "5818",
 			wantErr: false,
 		},
 	}
+	userStarResponse := "5818"
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := &Client{
-				http: tt.fields.http,
-			}
+			c := testClientString(200, userStarResponse)
 			got, err := c.Count(tt.args.urlStr)
+			gotStr := strconv.Itoa(got)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.Count() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got < tt.want {
-				t.Errorf("Client.Count() = %v, want %v", got, tt.want)
+			if gotStr != tt.want {
+				t.Errorf("Client.Count() = %v, want %v", gotStr, tt.want)
 			}
 		})
 	}

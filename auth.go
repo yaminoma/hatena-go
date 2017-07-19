@@ -28,6 +28,7 @@ var oauthClient = NewAuthenticator("", "", "", []string{})
 
 type Authenticator struct {
 	client      oauth.Client
+	httpClient  http.Client
 	redirectUri string
 	scopes      url.Values
 	cred        *oauth.Credentials
@@ -39,9 +40,9 @@ func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri str
 			Token:  consumerKey,
 			Secret: consumerSecret,
 		},
-		TemporaryCredentialRequestURI: "https://www.hatena.com/oauth/initiate",
-		ResourceOwnerAuthorizationURI: "https://www.hatena.com/oauth/authorize",
-		TokenRequestURI:               "https://www.hatena.com/oauth/token",
+		TemporaryCredentialRequestURI: "https://www.hatena.ne.jp/oauth/initiate",
+		ResourceOwnerAuthorizationURI: "https://www.hatena.ne.jp/oauth/authorize",
+		TokenRequestURI:               "https://www.hatena.ne.jp/oauth/token",
 	}
 
 	scopeParam := url.Values{}

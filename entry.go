@@ -1,7 +1,5 @@
 package hatena
 
-import ()
-
 const (
 	entryURL = "http://b.hatena.ne.jp/entry/json/"
 )
