@@ -1,6 +1,7 @@
 package hatena
 
 import (
+	"net/http"
 	"reflect"
 	"testing"
 )
@@ -26,7 +27,7 @@ func TestClient_UserStar(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientString(200, userStarResponse)
+			c := testClientString(http.StatusOK, userStarResponse)
 			got, err := c.UserStar(tt.args.username)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.UserStar() error = %v, wantErr %v", err, tt.wantErr)
@@ -60,7 +61,7 @@ func TestClient_GetStar(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientString(200, starResponse)
+			c := testClientString(http.StatusOK, starResponse)
 			got, err := c.GetStar(tt.args.urlStr)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.GetStar() error = %v, wantErr %v", err, tt.wantErr)

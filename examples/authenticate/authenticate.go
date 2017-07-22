@@ -51,7 +51,8 @@ func token(w http.ResponseWriter, r *http.Request) {
 
 func profile(w http.ResponseWriter, r *http.Request) {
 
-	resp, err := auth.GetBookmarkedEntry("https://api.nasa.gov/")
+	//resp, err := auth.GetBookmarkedEntry("https://api.nasa.gov/")
+	resp, err := auth.GetBookmark("https://api.nasa.gov/")
 	if err != nil {
 		http.Error(w, "ERROR: "+err.Error(), 500)
 		return

@@ -1,6 +1,7 @@
 package hatena
 
 import (
+	"net/http"
 	"reflect"
 	"testing"
 )
@@ -63,7 +64,7 @@ func TestEntryInfo(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientString(200, entryJson)
+			c := testClientString(http.StatusOK, entryJson)
 			got, err := c.EntryInfo(tt.args.urlStr)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("EntryInfo() error = %v, wantErr %v", err, tt.wantErr)

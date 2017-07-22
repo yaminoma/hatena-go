@@ -37,3 +37,7 @@ Examples of the API can be found in the [examples](https://github.com/8pockets/h
 License
 ------------------
 MIT
+
+Author
+------------------
+[8pockets](https://twitter.com/8pockets)

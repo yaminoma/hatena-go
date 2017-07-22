@@ -28,7 +28,7 @@ var oauthClient = NewAuthenticator("", "", "", []string{})
 
 type Authenticator struct {
 	client      oauth.Client
-	httpClient  http.Client
+	httpClient  *http.Client
 	redirectUri string
 	scopes      url.Values
 	cred        *oauth.Credentials
@@ -101,7 +101,7 @@ func (a *Authenticator) Token(w http.ResponseWriter, r *http.Request) (*oauth.Cr
 
 // apiGet issues a GET request to the Hatena API and decodes the response JSON to data.
 func (a *Authenticator) apiGet(urlStr string, form url.Values, result interface{}) error {
-	resp, err := a.client.Get(nil, a.cred, urlStr, form)
+	resp, err := a.client.Get(a.httpClient, a.cred, urlStr, form)
 	if err != nil {
 		return err
 	}
@@ -111,7 +111,7 @@ func (a *Authenticator) apiGet(urlStr string, form url.Values, result interface{
 
 // apiPost issues a POST request to the Hatena API and decodes the response JSON to data.
 func (a *Authenticator) apiPost(urlStr string, form url.Values, result interface{}) error {
-	resp, err := a.client.Post(nil, a.cred, urlStr, form)
+	resp, err := a.client.Post(a.httpClient, a.cred, urlStr, form)
 	if err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func (a *Authenticator) apiPost(urlStr string, form url.Values, result interface
 
 // apiDelete issues a DELETE request to the Hatena API and decodes the response JSON to data.
 func (a *Authenticator) apiDelete(urlStr string, form url.Values, result interface{}) error {
-	resp, err := a.client.Delete(nil, a.cred, urlStr, form)
+	resp, err := a.client.Delete(a.httpClient, a.cred, urlStr, form)
 	if err != nil {
 		return err
 	}
@@ -133,14 +133,13 @@ func (a *Authenticator) apiDelete(urlStr string, form url.Values, result interfa
 	if resp.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("get %s returned status %d, %s", resp.Request.URL, resp.StatusCode, resultByte)
 	}
-	fmt.Println(string(resultByte))
 	return json.NewDecoder(strings.NewReader(string(resultByte))).Decode(result)
 }
 
 // decodeResponse decodes the JSON response from the Hatena API.
 func decodeResponse(resp *http.Response, result interface{}) error {
 	resultByte, _ := ioutil.ReadAll(resp.Body)
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("get %s returned status %d, %s", resp.Request.URL, resp.StatusCode, resultByte)
 	}
 	fmt.Println(string(resultByte))

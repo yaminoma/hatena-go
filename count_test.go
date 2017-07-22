@@ -35,7 +35,7 @@ func TestClient_Count(t *testing.T) {
 	userStarResponse := "5818"
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := testClientString(200, userStarResponse)
+			c := testClientString(http.StatusOK, userStarResponse)
 			got, err := c.Count(tt.args.urlStr)
 			gotStr := strconv.Itoa(got)
 			if (err != nil) != tt.wantErr {

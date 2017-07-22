@@ -128,6 +128,9 @@ func TestClient_NewEntryAll(t *testing.T) {
 	}{
 		{
 			name: "TestClient_NewEntryAll",
+			args: args{
+				options: map[string]string{"sort": "popular"},
+			},
 			want: &Entries{
 				Title:       "はてなブックマーク - 新着エントリー",
 				Link:        "http://b.hatena.ne.jp/entrylist",
@@ -186,6 +189,10 @@ func TestClient_NewEntry(t *testing.T) {
 	}{
 		{
 			name: "TestClient_NewEntry",
+			args: args{
+				category: "it",
+				options:  map[string]string{"sort": "popular"},
+			},
 			want: &Entries{
 				Title:       "はてなブックマーク - 新着エントリー - テクノロジー",
 				Link:        "http://b.hatena.ne.jp/entrylist/it",

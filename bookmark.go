@@ -3,6 +3,8 @@ package hatena
 import (
 	"fmt"
 	"net/url"
+
+	"github.com/google/go-querystring/query"
 )
 
 var (
@@ -11,53 +13,53 @@ var (
 )
 
 type Bookmark struct {
-	Favorites       []interface{} `json:"favorites"`
-	CommentRaw      string        `json:"comment_raw"`
-	Private         bool          `json:"private"`
-	Eid             int           `json:"eid"`
-	CreatedEpoch    int           `json:"created_epoch"`
-	Tags            []interface{} `json:"tags"`
-	Permalink       string        `json:"permalink"`
-	Comment         string        `json:"comment"`
-	CreatedDatetime string        `json:"created_datetime"`
-	User            string        `json:"user"`
+	CommentRaw      string   `json:"comment_raw"`
+	Private         bool     `json:"private"`
+	Eid             int      `json:"eid"`
+	CreatedEpoch    int      `json:"created_epoch"`
+	Tags            []string `json:"tags"`
+	Permalink       string   `json:"permalink"`
+	Comment         string   `json:"comment"`
+	CreatedDatetime string   `json:"created_datetime"`
+	User            string   `json:"user"`
 }
 
 type BookmarkForm struct {
-	uri           string
-	comment       string
-	tags          []string
-	post_twitter  bool
-	post_facebook bool
-	post_mixi     bool
-	post_evernote bool
-	send_mail     bool
-	private       bool
+	uri           string   `json:"uri"`
+	comment       string   `json:"comment"`
+	tags          []string `json:"tags"`
+	post_twitter  bool     `json:"post_twitter"`
+	post_facebook bool     `json:"post_facebook"`
+	post_mixi     bool     `json:"post_mixi"`
+	post_evernote bool     `json:"post_evernote"`
+	send_mail     bool     `json:"send_mail"`
+	private       bool     `json:"private"`
 }
 
 // ブックマーク API
 // ブックマーク情報を取得する
 func (a *Authenticator) GetBookmark(uri string) (*Bookmark, error) {
 
-	form := url.Values{}
-	form.Set("url", uri)
+	values := make(url.Values)
+	values.Set("url", uri)
 
 	b := &Bookmark{}
-	err := a.apiGet(bookmarkURL, form, b)
+	err := a.apiGet(bookmarkURL, values, b)
 
 	return b, err
 }
 
 // ブックマーク API
 // ブックマークを追加または更新する
-func (a *Authenticator) AddBookmark(uri string, br BookmarkForm) (*Bookmark, error) {
+func (a *Authenticator) AddBookmark(br BookmarkForm) (*Bookmark, error) {
 
-	// BookmarkFormをurl.Valueに変換
-	form := url.Values{}
-	form.Set("url", uri)
+	values, err := query.Values(br)
+	if err != nil {
+		return nil, err
+	}
 
 	b := &Bookmark{}
-	err := a.apiPost(bookmarkURL, form, b)
+	err = a.apiPost(bookmarkURL, values, b)
 
 	return b, err
 }
@@ -66,11 +68,11 @@ func (a *Authenticator) AddBookmark(uri string, br BookmarkForm) (*Bookmark, err
 // ブックマークを削除する
 func (a *Authenticator) DeleteBookmark(uri string) error {
 
-	form := url.Values{}
-	form.Set("url", uri)
+	values := make(url.Values)
+	values.Set("url", uri)
 
 	b := &Bookmark{}
-	err := a.apiDelete(bookmarkURL, form, b)
+	err := a.apiDelete(bookmarkURL, values, b)
 
 	return err
 }
@@ -96,11 +98,11 @@ type BookmarkEntry struct {
 // ブックマークされたエントリーの情報を取得する
 func (a *Authenticator) GetBookmarkedEntry(uri string) (*BookmarkEntry, error) {
 
-	form := url.Values{}
-	form.Set("url", uri)
+	values := make(url.Values)
+	values.Set("url", uri)
 
 	b := &BookmarkEntry{}
-	err := a.apiGet(bookmarkEntryURL, form, b)
+	err := a.apiGet(bookmarkEntryURL, values, b)
 
 	return b, err
 }

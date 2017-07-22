@@ -37,7 +37,7 @@ func (c *Client) get(url string, result interface{}, format string) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return errors.New("http status is not 200")
+		return errors.New("http status is not http.StatusOK")
 	}
 
 	if format == "xml" {
@@ -62,7 +62,7 @@ func (c *Client) post(url string, data url.Values, result interface{}) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return errors.New("http status is not 200")
+		return errors.New("http status is not htp.StatusOK")
 	}
 
 	err = json.NewDecoder(resp.Body).Decode(result)
@@ -86,7 +86,7 @@ func (c *Client) delete(url string) error {
 
 	//削除成功の場合は204(http.StatusNoContent)が返却される
 	if resp.StatusCode != http.StatusNoContent {
-		return errors.New("http status is not 204")
+		return errors.New("http status is not http.StatusNoContent")
 	}
 
 	return nil
