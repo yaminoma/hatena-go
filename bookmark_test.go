@@ -104,6 +104,40 @@ func TestAuthenticator_AddBookmark(t *testing.T) {
 	}
 }
 
+func TestAuthenticator_DeleteBookmark(t *testing.T) {
+	type args struct {
+		uri string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    bool
+		wantErr bool
+	}{
+		{
+			name: "TestAuthenticator_DeleteBookmark",
+			args: args{
+				uri: "https://api.nasa.gov/",
+			},
+			want:    true,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			a := testAuthClientString(http.StatusNoContent, "")
+			got, err := a.DeleteBookmark(tt.args.uri)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Authenticator.DeleteBookmark() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("Authenticator.DeleteBookmark() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestAuthenticator_GetBookmarkedEntry(t *testing.T) {
 	type args struct {
 		uri string

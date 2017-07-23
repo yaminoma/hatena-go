@@ -15,10 +15,10 @@ import (
 )
 
 const (
-	HatenaReadPublic   = "read_public"
-	HatenaReadPrivate  = "read_private"
-	HatenaWritePublic  = "write_public"
-	HatenaWritePrivate = "write_private"
+	ReadPublic   = "read_public"
+	ReadPrivate  = "read_private"
+	WritePublic  = "write_public"
+	WritePrivate = "write_private"
 	// Session state keys.
 	tempCredKey  = "tempCred"
 	tokenCredKey = "tokenCred"
@@ -45,10 +45,10 @@ func NewAuthenticator(consumerKey string, consumerSecret string, redirectUri str
 		TokenRequestURI:               "https://www.hatena.ne.jp/oauth/token",
 	}
 
-	scopeParam := url.Values{}
-	for _, v := range scopes {
-		scopeParam.Add("scope", v)
-	}
+	//scope param
+	scopeStr := strings.Join(scopes, ",")
+	scopeParam := make(url.Values)
+	scopeParam.Add("scope", scopeStr)
 
 	return &Authenticator{
 		client:      oauthClient,
@@ -127,18 +127,24 @@ func (a *Authenticator) apiDelete(urlStr string, form url.Values, result interfa
 	}
 	defer resp.Body.Close()
 
-	resultByte, _ := ioutil.ReadAll(resp.Body)
+	resultByte, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 
 	//削除成功の場合は204(http.StatusNoContent)が返却される
 	if resp.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("get %s returned status %d, %s", resp.Request.URL, resp.StatusCode, resultByte)
 	}
-	return json.NewDecoder(strings.NewReader(string(resultByte))).Decode(result)
+	return nil
 }
 
 // decodeResponse decodes the JSON response from the Hatena API.
 func decodeResponse(resp *http.Response, result interface{}) error {
-	resultByte, _ := ioutil.ReadAll(resp.Body)
+	resultByte, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("get %s returned status %d, %s", resp.Request.URL, resp.StatusCode, resultByte)
 	}

@@ -12,3 +12,11 @@ func testAuthClientFile(code int, filename string) *Authenticator {
 		},
 	}
 }
+
+func testAuthClientString(code int, body string) *Authenticator {
+	return &Authenticator{
+		httpClient: &http.Client{
+			Transport: newStringRoundTripper(code, body),
+		},
+	}
+}

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	_ "encoding/json"
 	"fmt"
 	"net/http"
 
@@ -16,7 +16,7 @@ const ConsumerSecret = "H1dz3fGJXazEx8ccHm2BOF6dy6E="
 const redirectURI = "http://localhost:8080/callback"
 
 var (
-	scopes = []string{hatena.HatenaReadPrivate}
+	scopes = []string{hatena.ReadPrivate, hatena.WritePrivate, hatena.WritePublic}
 	auth   = hatena.NewAuthenticator(ConsumerKey, ConsumerSecret, redirectURI, scopes)
 )
 
@@ -52,12 +52,14 @@ func token(w http.ResponseWriter, r *http.Request) {
 func profile(w http.ResponseWriter, r *http.Request) {
 
 	//resp, err := auth.GetBookmarkedEntry("https://api.nasa.gov/")
-	resp, err := auth.GetBookmark("https://api.nasa.gov/")
+	//resp, err := auth.GetBookmark("https://api.nasa.gov/")
+	result, err := auth.DeleteBookmark("https://www.roomie.jp/2016/12/364004/")
 	if err != nil {
 		http.Error(w, "ERROR: "+err.Error(), 500)
 		return
 	}
-	json.NewEncoder(w).Encode(resp)
+	fmt.Println(result)
+	//json.NewEncoder(w).Encode(resp)
 
 	//get your profile abount hatenabookmark
 	//prof, _ := auth.GetProfile()

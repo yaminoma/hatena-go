@@ -43,8 +43,11 @@ func (a *Authenticator) GetBookmark(uri string) (*Bookmark, error) {
 	values := make(url.Values)
 	values.Set("url", uri)
 
-	b := &Bookmark{}
+	b := new(Bookmark)
 	err := a.apiGet(bookmarkURL, values, b)
+	if err != nil {
+		return nil, err
+	}
 
 	return b, err
 }
@@ -58,23 +61,29 @@ func (a *Authenticator) AddBookmark(br BookmarkForm) (*Bookmark, error) {
 		return nil, err
 	}
 
-	b := &Bookmark{}
+	b := new(Bookmark)
 	err = a.apiPost(bookmarkURL, values, b)
+	if err != nil {
+		return nil, err
+	}
 
 	return b, err
 }
 
 // ブックマーク API
 // ブックマークを削除する
-func (a *Authenticator) DeleteBookmark(uri string) error {
+func (a *Authenticator) DeleteBookmark(uri string) (bool, error) {
 
 	values := make(url.Values)
 	values.Set("url", uri)
 
-	b := &Bookmark{}
+	b := new(Bookmark)
 	err := a.apiDelete(bookmarkURL, values, b)
+	if err != nil {
+		return false, err
+	}
 
-	return err
+	return true, nil
 }
 
 type BookmarkEntry struct {
@@ -101,8 +110,11 @@ func (a *Authenticator) GetBookmarkedEntry(uri string) (*BookmarkEntry, error) {
 	values := make(url.Values)
 	values.Set("url", uri)
 
-	b := &BookmarkEntry{}
+	b := new(BookmarkEntry)
 	err := a.apiGet(bookmarkEntryURL, values, b)
+	if err != nil {
+		return nil, err
+	}
 
 	return b, err
 }
