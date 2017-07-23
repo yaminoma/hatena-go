@@ -51,10 +51,10 @@ func (c *Client) UserStar(username string) (*UserStars, error) {
 
 	uri := "http://b.hatena.ne.jp/" + username + "/"
 
-	val := url.Values{}
-	val.Add("uri", uri)
+	v := make(url.Values)
+	v.Add("uri", uri)
 
-	req := starURL + "blog.json?" + val.Encode()
+	req := starURL + "blog.json?" + v.Encode()
 
 	us := &UserStars{}
 	err := c.get(req, us, "json")
@@ -70,10 +70,10 @@ func GetStar(urlStr string) (*EntryStars, error) {
 
 func (c *Client) GetStar(urlStr string) (*EntryStars, error) {
 
-	val := url.Values{}
-	val.Add("uri", urlStr)
+	v := make(url.Values)
+	v.Add("uri", urlStr)
 
-	req := starURL + "entry.json?" + val.Encode()
+	req := starURL + "entry.json?" + v.Encode()
 
 	e := &EntryStars{}
 	err := c.get(req, e, "json")

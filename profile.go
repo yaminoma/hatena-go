@@ -34,10 +34,10 @@ type Profile struct {
 // はてなブックマークの
 func (a *Authenticator) GetProfile() (*Profile, error) {
 
-	form := url.Values{}
+	values := make(url.Values)
 
 	p := &Profile{}
-	err := a.apiGet(profileURL, form, p)
+	err := a.apiGet(profileURL, values, p)
 
 	return p, err
 }

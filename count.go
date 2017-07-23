@@ -15,7 +15,7 @@ func Count(urlStr string) (int, error) {
 
 func (c *Client) Count(urlStr string) (int, error) {
 
-	v := url.Values{}
+	v := make(url.Values)
 	v.Set("url", urlStr)
 	req := countURL + "?" + v.Encode()
 

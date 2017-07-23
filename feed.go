@@ -59,7 +59,7 @@ func NewEntryAll(options map[string]string) (*Entries, error) {
 
 func (c *Client) NewEntryAll(options map[string]string) (*Entries, error) {
 
-	val := url.Values{}
+	val := make(url.Values)
 	val.Add("mode", "rss")
 	for k, v := range options {
 		val.Add(k, v)
@@ -81,7 +81,7 @@ func NewEntry(category string, options map[string]string) (*Entries, error) {
 
 func (c *Client) NewEntry(category string, options map[string]string) (*Entries, error) {
 
-	val := url.Values{}
+	val := make(url.Values)
 	for k, v := range options {
 		val.Add(k, v)
 	}
@@ -101,7 +101,7 @@ func SearchEntry(searchWord string, searchType string, options map[string]string
 
 func (c *Client) SearchEntry(searchWord string, searchType string, options map[string]string) (*Entries, error) {
 
-	val := url.Values{}
+	val := make(url.Values)
 	val.Add("q", searchWord)
 	val.Add("mode", "rss")
 
@@ -124,7 +124,7 @@ func SearchUrlEntry(searchUrl string, options map[string]string) (*Entries, erro
 
 func (c *Client) SearchUrlEntry(searchUrl string, options map[string]string) (*Entries, error) {
 
-	val := url.Values{}
+	val := make(url.Values)
 	val.Add("url", searchUrl)
 	val.Add("mode", "rss")
 

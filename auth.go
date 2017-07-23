@@ -148,6 +148,5 @@ func decodeResponse(resp *http.Response, result interface{}) error {
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("get %s returned status %d, %s", resp.Request.URL, resp.StatusCode, resultByte)
 	}
-	fmt.Println(string(resultByte))
 	return json.NewDecoder(strings.NewReader(string(resultByte))).Decode(result)
 }

@@ -1,0 +1,28 @@
+{
+	"entries": [{
+		"stars": [{
+			"count": 393,
+			"quote": "comment1",
+			"name": "test-user1"
+		},{
+			"count": 1,
+			"quote": "comment2",
+			"name": "test-user2"
+		}],
+		"can_comment": 0,
+		"colored_stars": [{
+			"stars": [{
+				"count": 1,
+				"quote": "comment3",
+				"name": "test-user3"
+			}, {
+				"count": 1,
+				"quote": "comment4",
+				"name": "test-user4"
+			}],
+			"color": "green"
+		}],
+		"uri": "http://jkondo.hatenablog.com/entry/20060422/1145674096"
+	}],
+	"can_comment": 0
+}
