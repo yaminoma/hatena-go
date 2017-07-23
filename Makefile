@@ -1,6 +1,7 @@
 GO_VERSION:=$(shell go version)
 
 fmt:
+	# TODO: When Go 1.9 is released vendor folder should be ignored automatically
 	bash -c 'go list ./... | grep -v vendor | xargs -n1 go fmt'
 
 lintall:
@@ -18,11 +19,9 @@ test:
 	bash -c 'go list ./... | grep -v vendor | xargs -n1 go test -v -timeout=60s -cover'
 
 test-with-coverage:
-	# TODO: When Go 1.9 is released vendor folder should be ignored automatically
 	bash -c 'go test -v -race -coverprofile=coverage.out -covermode=atomic .'
 
 cover:
-	# TODO: When Go 1.9 is released vendor folder should be ignored automatically
 	bash -c 'go tool cover -func=coverage.out && go tool cover -html=coverage.out'
 
 bench:
