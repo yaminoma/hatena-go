@@ -1,36 +1,46 @@
 package hatena
 
 import (
-	"net/url"
+	"net/http"
 	"reflect"
 	"testing"
-
-	"github.com/garyburd/go-oauth/oauth"
 )
 
 func TestAuthenticator_GetProfile(t *testing.T) {
-	type fields struct {
-		client      oauth.Client
-		redirectUri string
-		scopes      url.Values
-		cred        *oauth.Credentials
-	}
 	tests := []struct {
 		name    string
-		fields  fields
 		want    *Profile
 		wantErr bool
 	}{
-	// TODO: Add test cases.
+		{
+			name: "TestAuthenticator_GetProfile",
+			want: &Profile{
+				IsOauthMixiCheck:    false,
+				MixiCheckChecked:    "inherit",
+				IgnoresRegex:        "",
+				IsOauthEvernote:     true,
+				TwitterChecked:      "inherit",
+				Plususer:            false,
+				BookmarkCount:       1657,
+				UserPageVersion:     "1",
+				DefaultSharedLinkTo: "origin",
+				EvernoteChecked:     "inherit",
+				FacebookChecked:     "inherit",
+				Name:                "test-user1",
+				Private:             false,
+				Rkm:                 "83EJ/kIpQzx1ilOaMVIgFg",
+				IsOauthTwitter:      true,
+				Login:               true,
+				Rks:                 "c69d6370fb4f5391ac4470be29c66060f38feb12",
+				IsOauthFacebook:     true,
+				IsStaff:             false,
+			},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &Authenticator{
-				client:      tt.fields.client,
-				redirectUri: tt.fields.redirectUri,
-				scopes:      tt.fields.scopes,
-				cred:        tt.fields.cred,
-			}
+			a := testAuthClientFile(http.StatusOK, "test_data/profile.txt")
 			got, err := a.GetProfile()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Authenticator.GetProfile() error = %v, wantErr %v", err, tt.wantErr)

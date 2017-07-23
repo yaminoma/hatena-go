@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "encoding/json"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -53,16 +53,16 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	//resp, err := auth.GetBookmarkedEntry("https://api.nasa.gov/")
 	//resp, err := auth.GetBookmark("https://api.nasa.gov/")
-	result, err := auth.DeleteBookmark("https://www.roomie.jp/2016/12/364004/")
-	if err != nil {
-		http.Error(w, "ERROR: "+err.Error(), 500)
-		return
-	}
-	fmt.Println(result)
+	//result, err := auth.DeleteBookmark("https://www.roomie.jp/2016/12/364004/")
+	//if err != nil {
+	//	http.Error(w, "ERROR: "+err.Error(), 500)
+	//	return
+	//}
+	//fmt.Println(result)
 	//json.NewEncoder(w).Encode(resp)
 
 	//get your profile abount hatenabookmark
-	//prof, _ := auth.GetProfile()
-	//json.NewEncoder(w).Encode(prof)
+	profile, _ := auth.GetProfile()
+	json.NewEncoder(w).Encode(profile)
 
 }
