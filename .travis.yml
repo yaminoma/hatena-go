@@ -8,5 +8,4 @@ before_install:
 install:
   - go get -t -v ./...
 script:
-  - $HOME/gopath/bin/goveralls -package "."
-  -service=travis-ci
+  - $HOME/gopath/bin/goveralls -package "." -service=travis-ci
