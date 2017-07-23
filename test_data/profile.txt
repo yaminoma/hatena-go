@@ -1,0 +1,21 @@
+{
+	"is_oauth_mixi_check": false,
+	"mixi_check_checked": "inherit",
+	"ignores_regex": "",
+	"is_oauth_evernote": true,
+	"twitter_checked": "inherit",
+	"plususer": false,
+	"bookmark_count": 1657,
+	"user_page_version": "1",
+	"default_shared_link_to": "origin",
+	"evernote_checked": "inherit",
+	"facebook_checked": "inherit",
+	"name": "test-user1",
+	"private": false,
+	"rkm": "83EJ/kIpQzx1ilOaMVIgFg",
+	"is_oauth_twitter": true,
+	"login": true,
+	"rks": "c69d6370fb4f5391ac4470be29c66060f38feb12",
+	"is_oauth_facebook": true,
+	"is_staff": false
+}
