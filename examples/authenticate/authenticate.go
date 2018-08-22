@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/8pockets/hatena-go"
+	"github.com/yaminoma/hatena-go"
 )
 
 // redirectURI is the OAuth redirect URI for the application.

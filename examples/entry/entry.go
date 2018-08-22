@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/8pockets/hatena-go"
+	"github.com/yaminoma/hatena-go"
 )
 
 func main() {

@@ -1,6 +1,0 @@
-package: github.com/8pockets/hatena-go
-import:
-- package: github.com/garyburd/go-oauth
-  subpackages:
-  - examples/session
-  - oauth
